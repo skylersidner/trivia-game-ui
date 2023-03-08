@@ -1,15 +1,11 @@
-import { BrowserRouter } from 'react-router-dom';
+import { Routes } from './Routes';
 
 function App() {
-    return <h1>Hello World</h1>;
-}
-
-function WrappedApp() {
     return (
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+        <>
+            <Routes />
+        </>
     );
 }
 
-export { WrappedApp as App };
+export default App;

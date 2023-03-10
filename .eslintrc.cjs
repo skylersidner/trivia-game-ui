@@ -16,7 +16,7 @@ module.exports = {
     parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: './trivia-game-ui/tsconfig.json',
+        project: './tsconfig.json',
     },
     plugins: ['react', '@typescript-eslint', 'prettier'],
     rules: {

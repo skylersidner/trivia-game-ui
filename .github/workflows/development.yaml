@@ -50,10 +50,10 @@ jobs:
       - name: Sync files to host
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.HOST_FTP.url }}
-          port: ${{ secrets.HOST_FTP.port }}
-          username: ${{ secrets.HOST_FTP.username }}
-          password: ${{ secrets.HOST_FTP.password }}
+          server: ftp.skylersidner.com
+          port: ${{ secrets.HOST_FTP_PORT }}
+          username: ${{ secrets.HOST_FTP_USERNAME }}
+          password: ${{ secrets.HOST_FTP_PASSWORD }}
 
   # TODO: delete this if not necessary
   #  release-ui:

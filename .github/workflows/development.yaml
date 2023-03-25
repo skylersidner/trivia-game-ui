@@ -1,0 +1,91 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  build-ui:
+    name: Build
+    runs-on: ubuntu-latest
+    environment: development
+
+    env:
+      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@develop
+      - name: Install dependencies
+        run: npm ci
+      - name: Build dist folder
+        run: npm run build-dev
+      - name: Generate archived artifact
+        uses: actions/upload-artifact@develop
+        with:
+          name: dist # Could adjust this name based on build commit? probably needs to be consistently named to release...
+          path: dist
+
+  deploy:
+    name: Deploy
+    needs: build-ui # Ensures this will not run unless this step is done successfully
+    runs-on: ubuntu-latest
+    environment: development
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@develop
+      - name: Download artifact
+        uses: actions/download-artifact@develop
+        with:
+          name: dist # Be sure this matches name/path created in build-ui job
+          path: dist
+      - name: Sync files to host
+        uses: SamKirkland/FTP-Deploy-Action@4.3.4
+        with:
+          server: ${{ secrets.HOST_FTP.url }}
+          port: ${{ secrets.HOST_FTP.port }}
+          username: ${{ secrets.HOST_FTP.username }}
+          password: ${{ secrets.HOST_FTP.password }}
+
+  # TODO: delete this if not necessary
+  #  release-ui:
+  #    runs-on: ubuntu-latest
+  #    environment: development
+  #
+  #    env:
+  #      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+  #      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+  #      FTP_CONFIG: ${{ secrets.FTP_CONFIG }}
+  #
+  #    steps:
+  #      - uses: actions/checkout@v3
+  #      - uses: actions/setup-node@v3
+  #        with:
+  #          node-version: '14'
+  #      - run: npm build-dev # Generate build directory
+  #      - run: npm install -g dotenv # Expose ENV variables to script
+  #      - run: npm install -g ftp-client
+  #      - run: node scripts/push-ui-ftp.js
+
+#  release-supabase:
+#    runs-on: ubuntu-latest
+#    environment: development
+#
+#    env:
+#      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+#      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+#      SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - uses: supabase/setup-cli@v1
+#        with:
+#          version: latest
+#
+#      - run: supabase link --project-ref SUPABASE_PROJECT_ID
+#      - run: supabase db push

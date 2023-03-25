@@ -26,7 +26,7 @@ jobs:
       - name: Build dist folder
         run: npm run build-dev
       - name: Generate archived artifact
-        uses: actions/upload-artifact@develop
+        uses: actions/upload-artifact@v3
         with:
           name: dist # Could adjust this name based on build commit? probably needs to be consistently named to release...
           path: dist
@@ -43,7 +43,7 @@ jobs:
         with:
           ref: develop
       - name: Download artifact
-        uses: actions/download-artifact@develop
+        uses: actions/download-artifact@v3
         with:
           name: dist # Be sure this matches name/path created in build-ui job
           path: dist

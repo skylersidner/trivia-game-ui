@@ -48,7 +48,7 @@ jobs:
           name: dist # Be sure this matches name/path created in build-ui job
           path: dist
       - name: Sync files to host
-        uses: SamKirkland/FTP-Deploy-Action@4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.HOST_FTP.url }}
           port: ${{ secrets.HOST_FTP.port }}

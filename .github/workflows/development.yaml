@@ -46,10 +46,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist
-          path: dist/
       - name: List files
         run: ls -l
-        working-directory: dist
       - name: Sync files to host
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
@@ -57,6 +55,7 @@ jobs:
           port: ${{ secrets.HOST_FTP_PORT }}
           username: ${{ secrets.HOST_FTP_USERNAME }}
           password: ${{ secrets.HOST_FTP_PASSWORD }}
+          dry-run: true
 
   # TODO: delete this if not necessary
   #  release-ui:

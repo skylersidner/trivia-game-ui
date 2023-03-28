@@ -6,7 +6,7 @@ function AppRoutes() {
             <Routes>
                 <Route path="/create" element={<div>Create Game</div>} />
                 <Route path="/join" element={<div>Join Game</div>} />
-                <Route path="/" element={<div>Dashboard</div>} />
+                <Route path="/" element={<div>Dashboard again</div>} />
             </Routes>
         </BrowserRouter>
     );

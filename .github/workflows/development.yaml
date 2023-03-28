@@ -47,6 +47,8 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: List files
+        run: ls -l
       - name: Sync files to host
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:

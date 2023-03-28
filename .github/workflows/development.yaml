@@ -50,7 +50,7 @@ jobs:
       - name: Sync files to host
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ftp.skylersidner.com
+          server: ${{ secrets.HOST_FTP_URL_TEST }}
           port: ${{ secrets.HOST_FTP_PORT }}
           username: ${{ secrets.HOST_FTP_USERNAME }}
           password: ${{ secrets.HOST_FTP_PASSWORD }}

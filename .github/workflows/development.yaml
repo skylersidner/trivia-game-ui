@@ -28,8 +28,8 @@ jobs:
       - name: Generate archived artifact
         uses: actions/upload-artifact@v3
         with:
-          name: dist # Could adjust this name based on build commit? probably needs to be consistently named to release...
-          path: dist
+          name: dist
+          path: dist/*
 
   deploy:
     name: Deploy
@@ -38,10 +38,6 @@ jobs:
     environment: development
 
     steps:
-      - name: Testing environment reference
-        run: |
-          echo "vars.TEST_ENV_VAR from development environment: ${{ vars.TEST_ENV_VAR }}"
-          echo "secrets.HOST_FTP_URL from development environment: ${{ secrets.HOST_FTP_URL }}"
       - name: Checkout repository
         uses: actions/checkout@v3
         with:

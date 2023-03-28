@@ -29,7 +29,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist
-          path: dist/*
+          path: dist/
 
   deploy:
     name: Deploy
@@ -54,6 +54,7 @@ jobs:
           port: ${{ secrets.HOST_FTP_PORT }}
           username: ${{ secrets.HOST_FTP_USERNAME }}
           password: ${{ secrets.HOST_FTP_PASSWORD }}
+          dry-run: true
 
   # TODO: delete this if not necessary
   #  release-ui:

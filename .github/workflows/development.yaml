@@ -38,6 +38,10 @@ jobs:
     environment: development
 
     steps:
+      - name: Testing environment reference
+        run: |
+          echo "vars.TEST_ENV_VAR from development environment: ${{ vars.TEST_ENV_VAR }}"
+          echo "secrets.HOST_FTP_URL from development environment: ${{ secrets.HOST_FTP_URL }}"
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -50,7 +54,7 @@ jobs:
       - name: Sync files to host
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ vars.HOST_FTP_URL }}
+          server: ${{ secrets.HOST_FTP_URL }}
           port: ${{ secrets.HOST_FTP_PORT }}
           username: ${{ secrets.HOST_FTP_USERNAME }}
           password: ${{ secrets.HOST_FTP_PASSWORD }}

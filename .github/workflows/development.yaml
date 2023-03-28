@@ -37,27 +37,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     env:
+      HOST_FTP_URL: ftp.skylersidner.com
       HOST_FTP_URL_TEST: ${{ secrets.HOST_FTP_URL_TEST }}
       HOST_FTP_URL_TEST_2: ${{ secrets.HOST_FTP_URL }}
 
 
     steps:
-      - name: Test global non-environment-specific variable reference
-        run: echo "$HOST_FTP_URL_TEST"
-      - name: Test local variable reference
-        env:
-          HOST_FTP_URL_TEST: ${{ secrets.HOST_FTP_URL_TEST }}
-        run: echo "$HOST_FTP_URL_TEST"
-      - name: Test global environment-specific variable reference
-        run: echo "$HOST_FTP_URL_TEST_2"
-      - name: Test local variable reference
-        env:
-          HOST_FTP_URL_TEST: ${{ secrets.HOST_FTP_URL_TEST }}
-        run: echo "$HOST_FTP_URL_TEST"
-      - name: Test local environment-specific variable reference
-        env:
-          HOST_FTP_URL_TEST: ${{ secrets.HOST_FTP_URL }}
-        run: echo "$HOST_FTP_URL_TEST"
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -70,7 +55,7 @@ jobs:
       - name: Sync files to host
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: $HOST_FTP_URL_TEST
+          server: "$HOST_FTP_URL"
           port: ${{ secrets.HOST_FTP_PORT }}
           username: ${{ secrets.HOST_FTP_USERNAME }}
           password: ${{ secrets.HOST_FTP_PASSWORD }}

@@ -45,8 +45,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: dist # Be sure this matches name/path created in build-ui job
-          path: dist
+          name: dist
+          path: /
       - name: Sync files to host
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:

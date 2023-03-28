@@ -38,9 +38,26 @@ jobs:
     environment: development
     env:
       HOST_FTP_URL_TEST: ${{ secrets.HOST_FTP_URL_TEST }}
+      HOST_FTP_URL_TEST_2: ${{ secrets.HOST_FTP_URL }}
 
 
     steps:
+      - name: Test global non-environment-specific variable reference
+        run: echo "$HOST_FTP_URL_TEST"
+      - name: Test local variable reference
+        env:
+          HOST_FTP_URL_TEST: ${{ secrets.HOST_FTP_URL_TEST }}
+        run: echo "$HOST_FTP_URL_TEST"
+      - name: Test global environment-specific variable reference
+        run: echo "$HOST_FTP_URL_TEST_2"
+      - name: Test local variable reference
+        env:
+          HOST_FTP_URL_TEST: ${{ secrets.HOST_FTP_URL_TEST }}
+        run: echo "$HOST_FTP_URL_TEST"
+      - name: Test local environment-specific variable reference
+        env:
+          HOST_FTP_URL_TEST: ${{ secrets.HOST_FTP_URL }}
+        run: echo "$HOST_FTP_URL_TEST"
       - name: Checkout repository
         uses: actions/checkout@v3
         with:

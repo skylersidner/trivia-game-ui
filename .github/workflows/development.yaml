@@ -46,7 +46,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist
-          path: /
+          path: dist
       - name: Sync files to host
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:

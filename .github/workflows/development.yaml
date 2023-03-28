@@ -36,11 +36,6 @@ jobs:
     needs: build-ui # Ensures this will not run unless this step is done successfully
     runs-on: ubuntu-latest
     environment: development
-    env:
-      HOST_FTP_URL: ftp.skylersidner.com
-      HOST_FTP_URL_TEST: ${{ secrets.HOST_FTP_URL_TEST }}
-      HOST_FTP_URL_TEST_2: ${{ secrets.HOST_FTP_URL }}
-
 
     steps:
       - name: Checkout repository
@@ -55,7 +50,7 @@ jobs:
       - name: Sync files to host
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ HOST_FTP_URL }}
+          server: ${{ vars.HOST_FTP_URL }}
           port: ${{ secrets.HOST_FTP_PORT }}
           username: ${{ secrets.HOST_FTP_USERNAME }}
           password: ${{ secrets.HOST_FTP_PASSWORD }}
